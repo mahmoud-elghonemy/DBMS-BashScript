@@ -14,7 +14,8 @@ do
   
           ./CreateDB.sh
        ;;
-       "ListDB") echo $element
+       "ListDB") 
+          ./ListDB.sh
        ;;
        "ConnectDB") echo $element
        ;;
