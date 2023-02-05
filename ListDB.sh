@@ -9,6 +9,7 @@
 
 if [ -d ./DB ]
 then
+   echo "List of DataBase"
    ls -F ./DB |  grep / #list all directories in DB only
    if [ $? -ne 0 ]
    then
