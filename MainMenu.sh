@@ -19,7 +19,8 @@ do
        ;;
        "ConnectDB") echo $element
        ;;
-       "DropDB") echo $element
+       "DropDB") 
+        ./DropDB.sh
        ;;
        "Exist") break
        ;;
