@@ -2,21 +2,13 @@
 #description this script: create DB 
 
 #create data as directory ---->okay
-#vaildation input for database name
+#vaildation input for database name--->okay
 #vaildation already exist or no --->okay
 
-# vaildName="([A-Za-z]*)([0-9]*)"
-# function test()
-# {
-#     if [ $1 = ~${vaildName} ]
-#     then 
-#     echo true
-#     else 
-#     echo false
-#     fi 
-# }
+
+
 isValidDB() {
- # local re='^[[:lower:]][[:lower:][:digit:]_-]{2,15}$'
+ 
   local re='^([A-Za-z]+)[_-]*[A-Za-z0-9]*$'
   (( ${#1} > 16 )) && return 1 #check lenght first argument is greater than 16 return one
   [[ $1 =~ $re ]] # return value of this comparison is used for the function
@@ -25,27 +17,33 @@ isValidDB() {
 
 testValidDBname() {
   if isValidDB "$1"; then
-    echo "$1 is a valid DB Name"
+    return 0
   else
-    echo "$1 is not a DB name"
+     return 1
   fi
 }
 
 echo "Please, Enter Database Name"
 read DBname
-testValidDBname $DBname #call function
+testValidDBname "$DBname" #call function
+if [ $? -eq 0 ]
+then 
+    if [ ! -d ./DB ]
+    then
+    mkdir ./DB
+    fi 
 
+    if [ ! -d ./DB/$DBname ]  
+    then
+        mkdir ./DB/$DBname #create new DB dir inside DB dir on current directory
+        echo "Data Base Created Succesfully"
 
-if [ ! -d ./DB ]
-then
-mkdir ./DB
-fi 
-if [ ! -d ./DB/$DBname ]  
-then
-    mkdir ./DB/$DBname #create new DB dir inside DB dir on current directory
+    else 
+        echo "this DB already exist"
+    fi 
 else 
-    echo "this DB already exist"
-fi 
+    echo "you must enter valid DB Name"
+fi
 
 
 
