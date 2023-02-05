@@ -34,7 +34,8 @@ then
     then
         #don't work source with cd 
         cd ./DB/$ConDBName
-        
+        ../../MenuOperation.sh
+
         #echo $ConDBName
     else
        echo "Not Exist this DataBase"
@@ -42,22 +43,3 @@ then
 else 
   echo "Not Exist any DataBases"
 fi 
-# if exist DB change directory or no 
-# because access DB
-# if true exit DB 
-# operation :
-# - Create Table
-# - List Tables
-# - Drop Table
-# - Insert into Table
-# - Select From Table
-# - Delete From Table
-# - Update Table
-
-
-#menu Operation
-# echo "Select what do you do on Database "
-# select operation in "Create Table" "List Tables" "Drop Table" "Insert into Table" "Select From Table" "Delete From Table" "Update Table"
-# do
-# echo $operation
-# done
