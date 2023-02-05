@@ -10,7 +10,9 @@ select element in CreateDB ListDB ConnectDB DropDB Exist
 do 
 
     case $element in
-     "CreateDB") echo $element
+     "CreateDB") 
+  
+          ./CreateDB.sh
        ;;
        "ListDB") echo $element
        ;;
