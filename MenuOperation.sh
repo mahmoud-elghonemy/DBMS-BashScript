@@ -21,7 +21,9 @@ do
 
         case $operation in 
          "Create Table")
-          echo $operation
+         #echo $operation
+          #pwd #/home/hopa/Documents/DBMS-BashScript/DB/Cloud
+          ../../CreateTable.sh
          ;;
          "List Tables")
          echo $operation
