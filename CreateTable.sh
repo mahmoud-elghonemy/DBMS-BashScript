@@ -24,11 +24,18 @@ function testValidTableName() {
 #vaildation table name ---->okay
 #check file table is exist or no -->okay
 #check file table.Mdata--->okay
-#pwd #/home/hopa/Documents/DBMS-BashScript/DB/Cloud 
-#  two cases
-#  cancat inputs columns id : integer : pk >>table name.Mdata
-#  cancat inputs columns fname : string  >>table name.Mdata
 
+
+#  two cases
+#  cancat inputs columns id : integer : YES >>table name.Mdata-->okay
+#  cancat inputs columns fname : string :NO >>table name.Mdata--->okay
+#input user columns name --->okay
+#input datatype column --->int or string --->ask evey columns-->okay
+#input assume first columns is pk--->okay
+
+#don't implem
+#validation NColumns
+#validation PK -->check not null and unqiue
 
 read -p "Please,Enter Table Name: " TName 
 #check Tname is valid or no 
@@ -39,10 +46,11 @@ then
       then
            touch ./$TName
            touch "./${TName}.Mdata"
-           typeset -i NColumns #NColumns integer 
-          read -p "Enter number of Columns: " NColumns 
-          #echo $NColumns
-          if [ $NColumns -ne '0' ] #if not zero and string 
+
+          typeset -i NColumns #NColumns integer 
+          read -p "Enter number of Columns and You must Number at least 2 Columns: " NColumns 
+          
+          if [ $NColumns -gt 1 ] #if not zero and string 
           then 
                   for i in $(eval echo "{1..$NColumns}")
                   do
@@ -91,11 +99,14 @@ then
                     echo $ColName:$DtypeCol:$Pk >>"$TName.Mdata" 
                     
                   done
+                echo "Table is Created :)"
           else 
-          echo "you must enter at least two columns "
+          echo "you must enter at least two columns and Only Numbers"
+          rm ./$TName
+          rm "./${TName}.Mdata"
           fi
           
-          echo "Table is Created :)"
+          
      else
         echo "Table is already Exist"
       fi
@@ -107,28 +118,4 @@ fi
 
 
 
-# ss="man"
-# mn="woman"
-# echo $ss:$mn
 
-
-
-
-
-
-
-
-
-
-
-#two approach
-# pk 
-
-
-#input user columns name 
-#input datatype column --->int or string --->ask evey columns
-#input primary key or no  #1 mahmoud mohamed ---> ask every table 
-#validation input column name
-#validation input datatypes
-#validation pk column is unique  
-#write every value in file.Mdata
