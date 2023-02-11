@@ -25,8 +25,12 @@ function testValidTableName() {
 #check file table is exist or no -->okay
 #check file table.Mdata--->okay
 #pwd #/home/hopa/Documents/DBMS-BashScript/DB/Cloud 
+#  two cases
+#  cancat inputs columns id : integer : pk >>table name.Mdata
+#  cancat inputs columns fname : string  >>table name.Mdata
 
-read -p "Please,Enter Table Name " TName 
+
+read -p "Please,Enter Table Name: " TName 
 #check Tname is valid or no 
 testValidTableName "$TName"
 if [ $? -eq 0 ] 
@@ -35,7 +39,63 @@ then
       then
            touch ./$TName
            touch "./${TName}.Mdata"
-           echo "Table is Created :)"
+           typeset -i NColumns #NColumns integer 
+          read -p "Enter number of Columns: " NColumns 
+          #echo $NColumns
+          if [ $NColumns -ne '0' ] #if not zero and string 
+          then 
+                  for i in $(eval echo "{1..$NColumns}")
+                  do
+                    read -p "Enter Column name: " ColName
+                    echo "Please,choose Datatypes column ?"
+                    select DtypeCol in int string
+                    do 
+                        case $DtypeCol in 
+                        "int")
+                          break
+                            ;;
+                        "string")
+                          break
+                          ;;
+                      
+                        *)
+                        echo select valid datatype for column
+                        ;;
+                        esac 
+                    done   
+                    if [ $i -eq 1 ]
+                    then 
+                                echo "Please,choose this column is Primary key or no"
+                                select Pk in YES NO
+                                do
+                                    case $Pk in
+                                    
+                                    "YES")
+                                    
+                                      break
+                                        ;;
+                                    "NO")
+                                      break
+                                      ;;
+                                    *)
+                                          echo Choose valid Number for column
+                                      ;;
+                                    esac
+
+                                    
+                                done 
+                      else 
+                      Pk=NO
+                      fi
+
+                    echo $ColName:$DtypeCol:$Pk >>"$TName.Mdata" 
+                    
+                  done
+          else 
+          echo "you must enter at least two columns "
+          fi
+          
+          echo "Table is Created :)"
      else
         echo "Table is already Exist"
       fi
@@ -43,51 +103,23 @@ else
 echo "Please,Enter valid table name"
 fi 
 
-typeset -i NColumns #NColumns integer 
-read -p "Enter number of Columns " NColumns 
-#echo $NColumns
-if [ $NColumns -ne '0' ] #if not zero and string 
-then 
-        for i in $NColumns
-        do
-           read -p "Enter Column name " ColName
-           echo "Please,choose Datatypes column ?"
-           select DtypeCol in int string
-           do 
-               case $DtypeCol in 
-               "int")
-                 break
-                   ;;
-               "string")
-                break
-                 ;;
-            
-               *)
-               echo select valid datatype for column
-               ;;
-               esac 
-           done   
-           echo "Please,choose this column is Primary key or no"
-           select Pk in YES NO
-           do
-               case $Pk in
-               
-               "YES")
-              
-                break
-                   ;;
-               "NO")
-                break
-                 ;;
-               *)
-                    echo choose valid choose for column
-                ;;
-               esac
-           done 
 
-           
-        done
-fi
+
+
+
+# ss="man"
+# mn="woman"
+# echo $ss:$mn
+
+
+
+
+
+
+
+
+
+
 
 #two approach
 # pk 
