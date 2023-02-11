@@ -29,7 +29,7 @@ do
          echo $operation
          ;;
          "Drop Table")
-         echo $operation
+          ../../DropTable.sh
         ;;
          "Insert into Table")
          echo $operation
