@@ -17,7 +17,8 @@ do
        "ListDB") 
           ./ListDB.sh
        ;;
-       "ConnectDB") echo $element
+       "ConnectDB") 
+          ./ConnectDB.sh
        ;;
        "DropDB") 
         ./DropDB.sh
