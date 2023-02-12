@@ -1,3 +1,5 @@
-id:int:YES
-first_name:string:NO
-last_name:string:NO
+id:int:YES 
+fname:string:NO
+lname:String:NO
+age:int:NO
+
