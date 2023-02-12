@@ -29,14 +29,16 @@ do
          ../../ListTables.sh
          ;;
          "Drop Table")
-          ../../DropTable.sh
+         ../../DropTable.sh
         ;;
          "Insert into Table")
          echo $operation
          ;;
          "Select From Table")
+         ../../Select.sh
          ;;
          "Delete From Table")
+         ../../DelFromTable.sh
          ;;
          "Update Table")
          ;;

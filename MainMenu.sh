@@ -21,7 +21,7 @@ do
           ./ConnectDB.sh
        ;;
        "DropDB") 
-        ./DropDB.sh
+          ./DropDB.sh
        ;;
        "Exist") break
        ;;

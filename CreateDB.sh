@@ -5,7 +5,7 @@
 #vaildation input for database name--->okay
 #vaildation already exist or no --->okay
 
-
+#export DBname
 
 isValidDB() {
  
