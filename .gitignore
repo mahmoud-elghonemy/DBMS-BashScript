@@ -1,4 +1,4 @@
 # ignore all .Mdata files
+/DB/
 *.Mdata
-*./DB/
 *./DB/*
