@@ -1,2 +1,5 @@
 id:int:YES
-name:string:NO
+fname:string:NO
+lname:String:NO
+age:int:NO
+
