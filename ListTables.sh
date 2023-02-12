@@ -1,6 +1,6 @@
 #!/bin/bash
 #$DBname
-# description: List Tables
+# description: List Tables >>> Done
 tables=`ls -F | grep -v / | grep -v !*.Mdata`
 
     if [[ "$tables" == "" ]]
