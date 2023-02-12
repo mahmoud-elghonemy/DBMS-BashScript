@@ -32,7 +32,7 @@ do
          ../../DropTable.sh
         ;;
          "Insert into Table")
-         echo $operation
+          ../../Insert.sh
          ;;
          "Select From Table")
          ../../Select.sh

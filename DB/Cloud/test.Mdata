@@ -1,4 +1,4 @@
-id:int:YES
+id:int:YES 
 fname:string:NO
 lname:String:NO
 age:int:NO
