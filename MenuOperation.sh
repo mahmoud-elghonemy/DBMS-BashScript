@@ -26,10 +26,10 @@ do
           ../../CreateTable.sh
          ;;
          "List Tables")
-         echo $operation
+         ../../ListTables.sh
          ;;
          "Drop Table")
-         echo $operation
+          ../../DropTable.sh
         ;;
          "Insert into Table")
          echo $operation

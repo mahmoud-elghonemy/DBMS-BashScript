@@ -1,7 +1,5 @@
-#!/usr/bin/bash
-#description for this script: List tables
+#!/bin/bash
 
-echo "List of Database Tables"
-#ls -A1 ./DB/$DBname
-
-ls ./DB/$ConDBName/*
+# description: List Tables    
+    echo "Tables names: "
+    ls -p | grep -v !*.Mdata | grep -v /
