@@ -26,7 +26,7 @@ do
           ../../CreateTable.sh
          ;;
          "List Tables")
-         echo $operation
+         ../../ListTables.sh
          ;;
          "Drop Table")
           ../../DropTable.sh
