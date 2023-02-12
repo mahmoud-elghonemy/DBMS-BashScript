@@ -25,7 +25,7 @@
 #  echo "Not Exist any DataBases"
 # fi 
 
-read -p "Please,Write Name Database need to connect " ConDBName
+read -p "Please,Write Name Database need to connect: " ConDBName
 #check $ConDBName and check DB is exist or no 
 #valid nanme 
 if [ -d ./DB ] 
@@ -42,4 +42,4 @@ then
     fi
 else 
   echo "Not Exist any DataBases"
-fi 
+fi
