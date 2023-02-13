@@ -1,7 +1,7 @@
 #!/bin/bash
 # description: Droping Table 
 read -p "Enter Table name you want to drop: " delTBName 
-if [ ! ${#delDBName} -eq 0 ]
+if [ ! ${#delTBName} -eq 0 ]
 then
 if [ -f  ./$delTBName ]
     then
