@@ -7,7 +7,7 @@ function isValidTB() {
  
   local re='^([A-Za-z]+)[_]*[A-Za-z]*$'
   (( ${#1} > 16 )) && return 1 #check lenght first argument is greater than 16 return one
-  [[ $1 =~ $re ]] # return value of this comparison is used for the function
+  [[ "$1" =~ $re ]] # return value of this comparison is used for the function
 }
 
 function testValidTableName() {
@@ -17,7 +17,20 @@ function testValidTableName() {
      return 1
   fi
 }
-
+function OnlyNumber()
+{
+  local re='^([0-9]+)*$'
+  (( ${#1} > 16 )) && return 1 #check lenght first argument is greater than 16 return one
+  [[ "$1" =~ $re ]] # return value of this comparison is used for the function
+     
+}
+function testOnlyNumber() {
+  if OnlyNumber "$1"; then
+    return 0
+  else
+     return 1
+  fi
+}
 
 
 #ask what is name table--->okay
@@ -34,11 +47,12 @@ function testValidTableName() {
 #input assume first columns is pk--->okay
 
 #don't implem
-#validation NColumns
-#validation PK -->check not null and unqiue
+#validation NColumns --->okay
+#assume first columns is pk in all table when created 
+#validation Name Column is unique --->
 
 read -p "Please,Enter Table Name: " TName 
-#check Tname is valid or no 
+#check Tname is valid or no ---->yes
 testValidTableName "$TName"
 if [ $? -eq 0 ] 
 then
@@ -47,65 +61,73 @@ then
            touch ./$TName
            touch "./${TName}.Mdata"
 
-          typeset -i NColumns #NColumns integer 
+           
           read -p "Enter number of Columns and You must Number at least 2 Columns: " NColumns 
+          testOnlyNumber "$NColumns" ---
           
-          if [ $NColumns -gt 1 ] #if not zero and string 
-          then 
-                  for i in $(eval echo "{1..$NColumns}")
-                  do
-                    read -p "Enter Column name: " ColName
-                    echo "Please,choose Datatypes column ?"
-                    select DtypeCol in int string
-                    do 
-                        case $DtypeCol in 
-                        "int")
-                          break
+          if [ $? -eq 0 ]
+          then
+      
+              if [ $NColumns -gt 1 ] #if not zero and string 
+              then 
+                      for i in $(eval echo "{1..$NColumns}")
+                      do
+                        read -p "Enter Column name: " ColName
+                        echo "Please,choose Datatypes column ?"
+                        select DtypeCol in int string
+                        do 
+                            case $DtypeCol in 
+                            "int")
+                              break
+                                ;;
+                            "string")
+                              break
+                              ;;
+                          
+                            *)
+                            echo select valid datatype for column
                             ;;
-                        "string")
-                          break
-                          ;;
-                      
-                        *)
-                        echo select valid datatype for column
-                        ;;
-                        esac 
-                    done   
-                    if [ $i -eq 1 ]
-                    then 
-                                echo "Please,choose this column is Primary key or no"
-                                select Pk in YES NO
-                                do
-                                    case $Pk in
-                                    
-                                    "YES")
-                                    
-                                      break
-                                        ;;
-                                    "NO")
-                                      break
-                                      ;;
-                                    *)
-                                          echo Choose valid Number for column
-                                      ;;
-                                    esac
+                            esac 
+                        done   
+                        if [ $i -eq 1 ]
+                        then 
+                                    echo "Please,choose this column is Primary key or no"
+                                    select Pk in YES NO
+                                    do
+                                        case $Pk in
+                                        
+                                        "YES")
+                                        
+                                          break
+                                            ;;
+                                        "NO")
+                                          break
+                                          ;;
+                                        *)
+                                              echo Choose valid Number for column
+                                          ;;
+                                        esac
 
-                                    
-                                done 
-                      else 
-                      Pk=NO
-                      fi
+                                        
+                                    done 
+                          else 
+                          Pk=NO
+                          fi
 
-                    echo $ColName:$DtypeCol:$Pk >>"$TName.Mdata" 
-                    
-                  done
-                echo "Table is Created :)"
-          else 
-          echo "you must enter at least two columns and Only Numbers"
-          rm ./$TName
-          rm "./${TName}.Mdata"
-          fi
-          
+                        echo $ColName:$DtypeCol:$Pk >>"$TName.Mdata" 
+                        
+                      done
+                    echo "Table is Created :)"
+              else 
+              echo "you must enter at least two columns"
+              rm ./$TName
+              rm "./${TName}.Mdata"
+              fi 
+            else
+              echo "Sorry,Please enter only Numbers"
+              rm ./$TName
+              rm "./${TName}.Mdata"
+            fi
           
      else
         echo "Table is already Exist"
