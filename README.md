@@ -1,4 +1,4 @@
-# DBMS_BashScript
+# DBMS-BashScript
 
 ## Description
 > It is a simple database engine project to make simple operations with databases and tables. 
