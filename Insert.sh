@@ -47,7 +47,7 @@ testValidString() {
 
 echo "Enter table name to insert row into this table: "
 read InTable
-if [ ! ${#InTable} -eq 0]
+if [ ! ${#InTable} -eq 0 ]
 then
 if [ -f "./$InTable" -a -f "./$InTable.Mdata" ]
 then 
