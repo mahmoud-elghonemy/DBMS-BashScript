@@ -20,8 +20,8 @@ do
      
     case $sel in 
        "Delete all data From Table")
-       sed -i "${NR}d" ./$delFormTable
-       echo "Delete Sucessfully :) "
+        sed -i "d" ./$delFormTable
+        echo "Delete Sucessfully :) "
 
        ;;
         "Delete Column")
@@ -59,9 +59,7 @@ do
                
         ;;
         "Delete Row")
-
-
-
+                       sed -i "$colNum"d ./$delFormTable.Mdata  
         ;;
         "Exit")
         break
