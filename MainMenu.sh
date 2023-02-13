@@ -5,7 +5,7 @@
 ###### Create DB
 #Menu-Main select 
 #create DB ,list DB,Connect BD ,Drop DB
-echo "Welcome,Please choose from the Menu select "
+PS3="Welcome,Please choose from the Menu select: "
 select element in CreateDB ListDB ConnectDB DropDB Exist
 do 
 
@@ -23,10 +23,11 @@ do
        "DropDB") 
           ./DropDB.sh
        ;;
-       "Exist") break
+       "Exist") clear
+       break
        ;;
        *)
-         echo "Please,use vaild select"
+         echo "Not Vaild, Please Select a Number From Menu"
        ;;      
     esac
 done

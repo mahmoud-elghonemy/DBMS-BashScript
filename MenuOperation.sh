@@ -15,8 +15,10 @@
 
 
 #menu Operation
-echo "Select what do you do on Database "
+
+PS3="Please Select From Operation: "
 select operation in "Create Table" "List Tables" "Drop Table" "Insert into Table" "Select From Table" "Delete From Table" "Update Table" "Return to Back Menu"
+
 do
 
         case $operation in 
@@ -43,11 +45,13 @@ do
          "Update Table")
           ../../Update.sh
          ;;
-         "Return to Back Menu")
+
+         "Return to Back Menu") clear 
           break
+
          ;;
          *)
-         echo "Please , choose correct operation"
+         echo "Please ,Choose a Number of operation"
          ;;
         esac
 done
