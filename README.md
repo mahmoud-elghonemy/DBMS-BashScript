@@ -28,9 +28,9 @@
 <a name="desc"></a>
 ## Start Project 
 - At first, clone the project
->      https://github.com/salmarefaie/DBMS_BashScript.git
+>      https://github.com/mahmoudmohamed/DBMS_BashScript.git
 - Then, start the project
->      . ./project.sh
+>       ./MainMenu.sh
 
 
 
