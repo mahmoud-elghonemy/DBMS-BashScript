@@ -13,5 +13,4 @@ tables=`ls -F | grep -v / | grep -v !*.Mdata`
         echo "$tables"
         echo "-----------------"
     fi
-
-#ls -p | grep -v !*.Mdata | grep -v /    
+   
