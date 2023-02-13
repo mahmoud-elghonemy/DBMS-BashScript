@@ -38,7 +38,7 @@ then
 
         #echo $ConDBName
     else
-       echo "Not Exist this DataBase"
+       echo "This DataBase Name Not Exist"
     fi
 else 
   echo "Not Exist any DataBases"

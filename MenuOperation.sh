@@ -15,7 +15,7 @@
 
 
 #menu Operation
-echo "Select what do you do on Database "
+PS3="Please Select From Operation: "
 select operation in "Create Table" "List Tables" "Drop Table" "Insert into Table" "Select From Table" "Delete From Table" "Update Table" "Exit"
 do
 
@@ -42,10 +42,11 @@ do
          ;;
          "Update Table")
          ;;
-         "Exit")
+         "Exit") clear 
+         break
          ;;
          *)
-         echo "Please , choose correct operation"
+         echo "Please ,Choose a Number of operation"
          ;;
         esac
 done
