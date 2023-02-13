@@ -119,8 +119,9 @@ then
                done
           fi 
 
-
+    echo "-----------------------"
     echo "Update Sucessfully :)"
+    echo "-----------------------"
 else 
 echo "You must enter valid table name to update"
 fi
