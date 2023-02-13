@@ -28,6 +28,8 @@
 read -p "Please,Enter DataBase Name To Connect: " ConDBName
 #check $ConDBName and check DB is exist or no 
 #valid nanme 
+if [ ! ${#ConDBName} -eq 0 ]
+then
 if [ -d ./DB ] 
 then
     if [ -d ./DB/$ConDBName ] 
@@ -44,4 +46,7 @@ then
     fi
 else 
   echo "Not Exist any DataBases"
+fi
+else 
+echo "Can't input empty"
 fi
