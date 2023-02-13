@@ -58,8 +58,61 @@ do
                         
                
         ;;
+        
         "Delete Row")
-                       sed -i "$colNum"d ./$delFormTable.Mdata  
+
+                NumCol=($(awk 'BEGIN{FS=":";} {print NF}' ./$delFormTable.Mdata)) 
+                ColsName=($(awk 'BEGIN{FS=":";} {print $1}' ./$delFormTable.Mdata))
+                ColsDataTypes=($(awk 'BEGIN{FS=":";} {print $2}' ./$delFormTable.Mdata))
+                  
+
+                echo "Please, Enter you Value Condition in any Column ,Enter column Name"
+                read NameCal
+                #check exist column name is exist in table or no 
+               while (( `cut -d":" -f1 "./$delFormTable.Mdata" | grep -x $NameCal | wc -w` == 0 ))
+                do 
+                        read -p "$NameCal Column should be Exist in $delFormTable table, please enter Correct Column: " NameCal
+                done
+                
+              
+    
+                echo "Please , your Condition value in field "
+                read DelValue
+                # while (( `cut -d":" -f2 "./$delFormTable" | grep -x $DelValue | wc -w` == 0 ))
+                # do 
+                #         read -p "Sorry $DelValue Doesn't Exist, please enter condition value to delete : " DelValue
+                # done
+
+                   
+                    numCol=`awk -v myvar=$NameCal 'BEGIN{FS=":";} {
+                        if($1==myvar)
+                        {print NR}
+                        }' ./$delFormTable.Mdata`
+                   
+
+
+                   RowsNumToDel=`awk  -v myCol=$numCol -v myDelValue=$DelValue  'BEGIN{FS=":";} {
+                                for(i=1; i<=NF; i++) 
+                                {
+                                if(i==myCol && $i==myDelValue){
+                                    print NR;
+                                    }
+                                } 
+                            
+                            }' ./$delFormTable`
+                   
+                    NumDelDone=0
+                    #loop elements to match specific this value and delete there rows
+                    for i in $RowsNumToDel;
+                    do
+                       echo $i
+                        ((numDel=$i-$NumDelDone)) #why need newvalue for row after delete first row and row second and so on
+                            sed -i "$numDel"d ./$delFormTable
+                        ((NumDelDone++))
+                            
+                    done
+
+                   echo "Delete Row Sucessfully :) "
         ;;
         "Exit")
         break
@@ -71,8 +124,8 @@ do
            
     esac
 done 
-
-
+else 
+ echo "Sorry,Please enter correct name table"
 fi
 
 
