@@ -88,11 +88,7 @@ do
     
                 echo "Please , your Condition value in field "
                 read DelValue
-                # while (( `cut -d":" -f2 "./$delFormTable" | grep -x $DelValue | wc -w` == 0 ))
-                # do 
-                #         read -p "Sorry $DelValue Doesn't Exist, please enter condition value to delete : " DelValue
-                # done
-
+              
                    
                     numCol=`awk -v myvar=$NameCal 'BEGIN{FS=":";} {
                         if($1==myvar)
