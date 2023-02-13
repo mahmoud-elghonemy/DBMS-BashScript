@@ -44,21 +44,23 @@ do
                     # validate colName
                     if [[ $colFlag == 0 ]]; then
                     # valid colName
-
-                        # delete column from Data/$tableName
-                        # cut -d':' --complement -f./$delFormTable 
-                        # sed -i "$colNum"d ./$delFormTable
-                        cut -d':' --complement -f./$delFormTable  > ./$delFormTable.tmp
-                        mv ./$delFormTable.tmp ./$delFormTable
+                        
+                        touch ./$delFormTable.del
+                        cut -d':' --complement -f$colNum ./$delFormTable > ./$delFormTable.del
+                        mv ./$delFormTable.del ./$delFormTable
                         # delete line containing column from Mdata/$tableName
-                        sed -i "$colNum"d ./$delFormTable.Mdata
+                        sed -i "$colNum"d ./$delFormTable.Mdata  
+
+                        echo "Delete Column Sucessfully :) "
                     else
                         echo "ERROR:In-valid column name.";
                     fi
                         
-               echo "Delete Column Sucessfully :) "
+               
         ;;
         "Delete Row")
+
+
 
         ;;
         "Exit")
@@ -74,8 +76,5 @@ done
 
 
 fi
-
-# echo "Select this Table"
-# cat $selTable
 
 
