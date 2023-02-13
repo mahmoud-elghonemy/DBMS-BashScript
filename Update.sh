@@ -21,6 +21,8 @@ function checkString()
  
 echo "Enter table name to Update row into this table: "
 read InTable
+if [ ! ${#InTable} -eq 0 ]
+then
 if [ -f "./$InTable" -a -f "./$InTable.Mdata" ]
 then 
          NumCol=($(awk 'BEGIN{FS=":";} {print NF}' ./$InTable.Mdata)) 
@@ -124,4 +126,7 @@ then
     echo "-----------------------"
 else 
 echo "You must enter valid table name to update"
+fi
+else 
+echo "You must enter input,Can't input Empty"
 fi
