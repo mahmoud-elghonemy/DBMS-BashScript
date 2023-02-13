@@ -19,7 +19,7 @@ function checkString()
 }
 
  
-echo "Enter table name to insert row into this table: "
+echo "Enter table name to Update row into this table: "
 read InTable
 if [ -f "./$InTable" -a -f "./$InTable.Mdata" ]
 then 
