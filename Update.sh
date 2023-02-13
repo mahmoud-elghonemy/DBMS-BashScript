@@ -81,11 +81,12 @@ then
                                         read -p "${ColsName[i]} should be unique, please enter another value: " NewValue
                                     done
                                     fi    
+                                 
+                                #replace or update value
+                                sed  "s/:$OldValue:/:$NewValue:/g" ./$InTable > ./tempFile
+                                mv ./tempFile ./$InTable
                                
-
-                                sed -i "1s/$old/$NewValue/" ./$InTable  
-                               #replace or update value
-                              echo hello replace
+                              
                               break
                          else  
                              echo "Sorry,Please you must enter ${ColsDataTypes[indexType]} in this $NameCal column"
@@ -108,8 +109,11 @@ then
                                     fi    
                                
                             
-                               sed -i '/^OldValue/{s/ [^ ]*/ $NewValue/3}' ./$InTable
-                               echo hello replace
+                              
+                                #replace or update value
+                                sed  "s/:$OldValue:/:$NewValue:/g" ./$InTable > ./tempFile
+                                mv ./tempFile ./$InTable
+
                                break
                          else  
                              echo "Sorry,Please you must enter ${ColsDataTypes[indexType]} in this $NameCal column"
@@ -120,33 +124,7 @@ then
           fi 
 
 
-        #  sed -i '/^username4/{s/ [^ ]*/ anything/3}' ./$InTable
-        
-
     echo "Update Sucessfully :)"
 else 
 echo "You must enter valid table name to update"
 fi
-
-
-  # cot=0
-        # echo "eter the update script"
-        # read val
-        # coltypedata=$(ColsDataTypes[cot-1])
-        # if [ coltypedata ==  "int" ] 
-        # then
-        # checkInt "$val" 
-        # else
-        # echo "eter the update script"
-        # read val
-        # fi
-        # oldvalues=($(awk '{if (NR = 0) print $'$cot' }' ./$InTable))
-        # read  -p "enter the value of pk " pk
-        # NR=$(awk '{ if ($1 == '$pk')print NR}' ./$InTable)
-        # if [ "$NR" == "" ]
-        # then
-        # echo "$pk does not exist"
-        # else
-        # old=$(awk  '{if (NR =='${NR[0]}')print $'$cot'}' ./$InTable)
-        # sed -i "${NR}s/$old/val/" ./$InTable
-        # fi

@@ -1,5 +1,5 @@
 id:int:YES 
-fname:string:NO
+fname:String:NO
 lname:String:NO
 age:int:NO
 
