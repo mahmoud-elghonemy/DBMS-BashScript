@@ -5,7 +5,9 @@ if [ -f  ./$delTBName ]
     then
         rm -r ./$delTBName
         rm -r ./$delTBName.Mdata
+        echo "-----------------------------------"
         echo "$delTBName dropped Sucessfully :)"
+        echo "-----------------------------------"
     else
         echo "Not Valid Table Name"
 fi
