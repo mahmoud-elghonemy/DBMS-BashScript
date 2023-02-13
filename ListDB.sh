@@ -9,12 +9,17 @@
 
 if [ -d ./DB ]
 then
-   echo "List of DataBase"
-   ls -F ./DB |  grep / #list all directories in DB only
+   echo "-----------------"
+   echo "List of DataBase:"
+   echo "-----------------"
+   ls -F ./DB |  grep /  #list all directories in DB only
    if [ $? -ne 0 ]
    then
     echo "No exist Any Databases in DB Storage or Directory"
+   else 
+   echo "-----------------"
    fi
+
 else
    echo "No exist Any Databases"
 fi
