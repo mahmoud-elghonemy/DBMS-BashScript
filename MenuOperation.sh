@@ -41,6 +41,7 @@ do
          ../../DelFromTable.sh
          ;;
          "Update Table")
+          ../../Update.sh
          ;;
          "Exit")
          ;;
