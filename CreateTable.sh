@@ -54,7 +54,7 @@ function testOnlyNumber() {
 read -p "Please,Enter Table Name: " TName 
 #check Tname is valid or no ---->yes
 testValidTableName "$TName"
-if [ $? -eq 0 ] 
+if [ $? -eq 0 -a ! ${#TName} -eq 0 ] 
 then
       if [ ! -f ./$TName  -a  ! -f "./${TName}.Mdata" ]
       then
@@ -104,7 +104,7 @@ then
                                           done  
                                             if [ $i -eq 1 ]
                                            then 
-                                           PK=YES 
+                                                PK=YES 
                                            else 
                                            Pk=NO
                                            fi 

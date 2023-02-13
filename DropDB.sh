@@ -11,11 +11,16 @@
 
 #first Approach 
 read -p "Enter Name DB who want to delete it ? " delDBName 
-if [ -d ./DB/$delDBName ]
+if [ ! ${#delDBName} -eq 0 ]
+then
+if [ -d ./DB/$delDBName  ]
 then
     rm -r ./DB/$delDBName
     echo "$delDBName dropped Sucessfully :)"
 else
    echo "This Database Doesn't Exist or Not vaild Database Name"
 fi 
+else 
+ echo "You must input , Can't input empty"
+fi
 

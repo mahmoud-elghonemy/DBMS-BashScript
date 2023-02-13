@@ -47,6 +47,8 @@ testValidString() {
 
 echo "Enter table name to insert row into this table: "
 read InTable
+if [ ! ${#InTable} -eq 0]
+then
 if [ -f "./$InTable" -a -f "./$InTable.Mdata" ]
 then 
     NumRows=($(awk 'BEGIN{FS=":";} END{print NR}' ./$InTable.Mdata))
@@ -156,4 +158,6 @@ then
 else 
 echo "You must enter valid table name to insert"
 fi
-
+else 
+echo "You must input , Can't input empty"
+fi

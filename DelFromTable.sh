@@ -10,8 +10,9 @@
 # read column name from user
 
 read -p "Please,Enter name table  to select it: " delFormTable
-
-if [ -f ./$delFormTable ]
+if [ ! ${#delFormTable} -eq 0 ]
+then
+if [ -f ./$delFormTable -a  ]
 then 
 echo "Please,choose what do you want to select from menu? "
 select sel in "Delete all data From Table" "Delete Column" "Delete Row" "Return Back to Menu"
@@ -133,5 +134,6 @@ done
 else 
  echo "Sorry,Please enter correct name table"
 fi
-
-
+else 
+echo "You must input , Can't input empty"
+fi

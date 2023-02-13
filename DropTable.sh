@@ -1,6 +1,8 @@
 #!/bin/bash
 # description: Droping Table 
 read -p "Enter Table name you want to drop: " delTBName 
+if [ ! ${#delDBName} -eq 0 ]
+then
 if [ -f  ./$delTBName ]
     then
         rm -r ./$delTBName
@@ -10,4 +12,7 @@ if [ -f  ./$delTBName ]
         echo "-----------------------------------"
     else
         echo "Not Valid Table Name"
+fi
+else 
+echo "You must input , Can't input empty"
 fi
