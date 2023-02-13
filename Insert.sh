@@ -29,20 +29,34 @@ function checkString()
     
 }
 
+testValidInt() {
+  if checkInt "$1"; then 
+    return 0
+  else
+     return 1 
+  fi
+}
+testValidString() {
+  if checkString "$1"; then 
+    return 0
+  else
+     return 1 
+  fi
+}
 
 
 echo "Enter table name to insert row into this table: "
 read InTable
 if [ -f "./$InTable" -a -f "./$InTable.Mdata" ]
 then 
-    NumRows=($(awk 'BEGIN{FS=":";} {print NR}' ./$InTable.Mdata))
+    NumRows=($(awk 'BEGIN{FS=":";} END{print NR}' ./$InTable.Mdata))
     ColsName=($(awk 'BEGIN{FS=":";} {print $1}' ./$InTable.Mdata))
     ColsDataTypes=($(awk 'BEGIN{FS=":";} {print $2}' ./$InTable.Mdata))
     output=""
-    echo $NumRows
+
+((NumRows--))
     for i in $(seq 0 $NumRows);
     do 
-           
          echo "please,Enter" ${ColsName[i]}":"
     
             if [ "${ColsDataTypes[i]}" == "int" ]
@@ -51,28 +65,28 @@ then
                         do  
                             
                                     read inputInt
-                                    checkInt "$inputInt"
-                                    if [ $? -eq 0 ]
+                                    testValidInt "$inputInt"
+                                    if [ $? -eq 0  -a  ! ${#inputInt} -eq 0 ]
                                     then 
-                                        
+                                 
                                         
                                             #unique id
                                             if (( $i == 0 )) ;then
-                                            while (( `cut -d":" -f1 "./$InTable" | grep -x $inputInt |wc -w` > 0 ))
-                                            do 
-                                                
-                                                    while [ true ]
-                                                    do  
-                                                        read -p "${ColsName[i]} should be unique, please enter another value: " inputInt
-                                                        checkInt "$inputInt" 
-                                                            if [ $? -eq 0 ]
+                                                while (( `cut -d":" -f1 "./$InTable" | grep -x $inputInt |wc -w` > 0 ))
+                                                do 
+                                                    
+                                                        while [ true ]
+                                                        do  
+                                                            read -p "${ColsName[i]} should be unique, please enter another value: " inputInt
+                                                            testValidInt "$inputInt" 
+                                                            if [ $? -eq 0  -a  ! ${#inputInt} -eq 0  ]
                                                             then
-                                                                    break
+                                                                        break
                                                             else 
-                                                                echo "you must enter integer datatype in this "${ColsName[i]}
+                                                                    echo "you must enter integer datatype in this "${ColsName[i]}
                                                             fi
-                                                    done
-                                            done
+                                                        done
+                                                done
                                             fi
                                                     
                                                     output+=$inputInt
@@ -87,7 +101,7 @@ then
                                     
                                 
                                     else 
-                                            echo "you must enter integer datatype in this "${ColsName[i]}
+                                            echo "you must Input enter integer datatype in this "${ColsName[i]}
                                             echo "Please, Enter another once "${ColsName[i]}
                             
                                     fi
@@ -96,8 +110,8 @@ then
                         while [ true ]
                         do
                                     read inputStr
-                                    checkString "$inputStr"
-                                        if [ $? -eq 0 ]
+                                    testValidString "$inputStr"
+                                        if [ $? -eq 0 -a ! ${#inputStr} -eq 0 ]
                                         then 
                                                   #unique id
                                                     if (( $i == 0 )) ;then
@@ -107,8 +121,8 @@ then
                                                             while [ true ]
                                                             do  
                                                                 read -p "${ColsName[i]} should be unique, please enter another value: " inputStr
-                                                                checkInt "$inputStr" 
-                                                                    if [ $? -eq 0 ]
+                                                                testValidString "$inputStr" 
+                                                                    if [ $? -eq 0 -a ! ${#inputStr} -eq 0 ]
                                                                     then
                                                                             break
                                                                     else 
@@ -135,7 +149,9 @@ then
         
     done
     echo $output >> ./$InTable
+    echo "----------------------"
     echo "Insert Sucessfully :)"
+    echo "----------------------"
 
 else 
 echo "You must enter valid table name to insert"
