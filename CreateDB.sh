@@ -5,7 +5,7 @@
 #vaildation input for database name--->okay
 #vaildation already exist or no --->okay
 
-#export DBname
+
 
 isValidDB() {
  
@@ -16,10 +16,10 @@ isValidDB() {
 
 
 testValidDBname() {
-  if isValidDB "$1"; then
+  if isValidDB "$1"; then 
     return 0
   else
-     return 1
+     return 1 
   fi
 }
 
@@ -36,9 +36,13 @@ then
     if [ ! -d ./DB/$DBname ]  
     then
         mkdir ./DB/$DBname #create new DB dir inside DB dir on current directory
-        echo "Data Base Created Succesfully"
+         echo "-----------------------------"
+         echo "Data Base Created Succesfully"
+         echo "-----------------------------"
+       
 
     else 
+     
         echo "this DB already exist"
     fi 
 else 
