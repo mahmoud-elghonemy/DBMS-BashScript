@@ -103,29 +103,11 @@ then
                                               esac 
                                           done  
                                             if [ $i -eq 1 ]
-                                    then 
-                                              echo "Please,choose this column is Primary key or no"
-                                              select Pk in YES NO
-                                              do
-                                                  case $Pk in
-                                                  
-                                                  "YES")
-                                                  
-                                                    break
-                                                      ;;
-                                                  "NO")
-                                                    break
-                                                    ;;
-                                                  *)
-                                                        echo Choose valid Number for column
-                                                    ;;
-                                                  esac
-
-                                                  
-                                              done 
-                                    else 
-                                    Pk=NO
-                                    fi 
+                                           then 
+                                           PK=YES 
+                                           else 
+                                           Pk=NO
+                                           fi 
 
                                     echo $ColName:$DtypeCol:$Pk >>"$TName.Mdata" 
                                     break
