@@ -7,10 +7,7 @@
 #select column check is exist in table or no
 #select this column if it is exist 
 
-# function CheckCol
-# {
-   
-# }
+
 
 
 read -p "Please,Enter name table  to select it: " selTable
