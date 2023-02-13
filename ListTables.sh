@@ -7,7 +7,11 @@ tables=`ls -F | grep -v / | grep -v !*.Mdata`
         then
         echo "Nothing to list"
     else
-        echo "$tables"
+        echo "-----------------"
+        echo "List of Tables:"
+        echo "-----------------"
+        echo "    $tables      "
+        echo "-----------------"
     fi
 
 #ls -p | grep -v !*.Mdata | grep -v /    
