@@ -26,7 +26,7 @@ testValidDBname() {
 echo "Please, Enter Database Name"
 read DBname
 testValidDBname "$DBname" #call function
-if [ $? -eq 0 ]
+if [ $? -eq 0  -a ! ${#ConDBName} -eq 0 ]
 then 
     if [ ! -d ./DB ]
     then
