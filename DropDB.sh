@@ -16,7 +16,9 @@ then
 if [ -d ./DB/$delDBName  ]
 then
     rm -r ./DB/$delDBName
+    echo "---------------------------------"
     echo "$delDBName dropped Sucessfully :)"
+    echo "---------------------------------"
 else
    echo "This Database Doesn't Exist or Not vaild Database Name"
 fi 
