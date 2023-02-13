@@ -13,7 +13,7 @@
 
 
 #Function check datatypes
-function checkInt()
+export function checkInt()
 {
     local re='^([0-9]+)*$'
     (( ${#1} > 16 )) && return 1
@@ -21,7 +21,7 @@ function checkInt()
     
 }
 
-function checkString()
+export function checkString()
 {
     local re1='^([A-Za-z]+)*$'
     (( ${#1} > 16 )) && return 1
@@ -29,14 +29,14 @@ function checkString()
     
 }
 
-testValidInt() {
+export testValidInt() {
   if checkInt "$1"; then 
     return 0
   else
      return 1 
   fi
 }
-testValidString() {
+export testValidString() {
   if checkString "$1"; then 
     return 0
   else
