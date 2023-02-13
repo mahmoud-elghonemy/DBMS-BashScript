@@ -25,7 +25,7 @@
 #  echo "Not Exist any DataBases"
 # fi 
 
-read -p "Please,Write Name Database need to connect: " ConDBName
+read -p "Please,Enter DataBase Name To Connect: " ConDBName
 #check $ConDBName and check DB is exist or no 
 #valid nanme 
 if [ -d ./DB ] 
@@ -34,6 +34,8 @@ then
     then
         #don't work source with cd 
         cd ./DB/$ConDBName
+        clear
+        echo "$ConDBName DB is selected.."
         ../../MenuOperation.sh
 
         #echo $ConDBName

@@ -27,7 +27,7 @@ do
        break
        ;;
        *)
-         echo "Please,use vaild select"
+         echo "Not Vaild, Please Select a Number From Menu"
        ;;      
     esac
 done
