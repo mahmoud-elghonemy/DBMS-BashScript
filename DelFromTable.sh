@@ -14,7 +14,7 @@ read -p "Please,Enter name table  to select it: " delFormTable
 if [ -f ./$delFormTable ]
 then 
 echo "Please,choose what do you want to select from menu? "
-select sel in "Delete all data From Table" "Delete Column" "Delete Row" "Exit"
+select sel in "Delete all data From Table" "Delete Column" "Delete Row" "Return Back to Menu"
 do   
     
      
@@ -105,7 +105,7 @@ do
                     #loop elements to match specific this value and delete there rows
                     for i in $RowsNumToDel;
                     do
-                       echo $i
+                    #    echo $i
                         ((numDel=$i-$NumDelDone)) #why need newvalue for row after delete first row and row second and so on
                             sed -i "$numDel"d ./$delFormTable
                         ((NumDelDone++))
@@ -114,7 +114,7 @@ do
 
                    echo "Delete Row Sucessfully :) "
         ;;
-        "Exit")
+        "Return Back to Menu")
         break
         ;;
         *)
