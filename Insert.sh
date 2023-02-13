@@ -12,7 +12,6 @@
 #validation if first column is pk check is unique and not null---->okay
 
 
-
 #Function check datatypes
 function checkInt()
 {
@@ -36,15 +35,17 @@ echo "Enter table name to insert row into this table: "
 read InTable
 if [ -f "./$InTable" -a -f "./$InTable.Mdata" ]
 then 
-    NumRows=($(awk 'BEGIN{FS=":";} {print NF}' ./$InTable.Mdata))
+    NumRows=($(awk 'BEGIN{FS=":";} {print NR}' ./$InTable.Mdata))
     ColsName=($(awk 'BEGIN{FS=":";} {print $1}' ./$InTable.Mdata))
     ColsDataTypes=($(awk 'BEGIN{FS=":";} {print $2}' ./$InTable.Mdata))
     output=""
+    echo $NumRows
     for i in $(seq 0 $NumRows);
     do 
-    echo "please,Enter" ${ColsName[i]}":"
+           
+         echo "please,Enter" ${ColsName[i]}":"
     
-            if [ ${ColsDataTypes[i]} == "int" ]
+            if [ "${ColsDataTypes[i]}" == "int" ]
             then 
                         while [ true ]
                         do  
@@ -59,7 +60,18 @@ then
                                             if (( $i == 0 )) ;then
                                             while (( `cut -d":" -f1 "./$InTable" | grep -x $inputInt |wc -w` > 0 ))
                                             do 
-                                                read -p "${ColsName[i]} should be unique, please enter another value: " inputInt
+                                                
+                                                    while [ true ]
+                                                    do  
+                                                        read -p "${ColsName[i]} should be unique, please enter another value: " inputInt
+                                                        checkInt "$inputInt" 
+                                                            if [ $? -eq 0 ]
+                                                            then
+                                                                    break
+                                                            else 
+                                                                echo "you must enter integer datatype in this "${ColsName[i]}
+                                                            fi
+                                                    done
                                             done
                                             fi
                                                     
@@ -87,13 +99,24 @@ then
                                     checkString "$inputStr"
                                         if [ $? -eq 0 ]
                                         then 
-                                        #unique id
-                                            if (( $i == 0 )) ;then
-                                            while (( `cut -d":" -f1 "./$InTable" | grep -x $inputStr |wc -w` > 0 ))
-                                            do 
-                                                read -p "${ColsName[i]} should be unique, please enter another value: " inputStr
-                                            done
-                                            fi    
+                                                  #unique id
+                                                    if (( $i == 0 )) ;then
+                                                    while (( `cut -d":" -f1 "./$InTable" | grep -x $inputStr |wc -w` > 0 ))
+                                                    do 
+                                                        
+                                                            while [ true ]
+                                                            do  
+                                                                read -p "${ColsName[i]} should be unique, please enter another value: " inputStr
+                                                                checkInt "$inputStr" 
+                                                                    if [ $? -eq 0 ]
+                                                                    then
+                                                                            break
+                                                                    else 
+                                                                        echo "you must enter String datatype in this "${ColsName[i]}
+                                                                    fi
+                                                            done
+                                                    done
+                                                    fi
 
                                         output+=$inputStr
                                             if [ $i -ne $NumRows ]

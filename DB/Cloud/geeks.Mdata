@@ -1,4 +1,2 @@
-id:int:YES 
-lname:String:NO
-age:int:NO
-
+id:int:YES
+name:string:NO
