@@ -58,12 +58,12 @@ if [ $? -eq 0 ]
 then
       if [ ! -f ./$TName  -a  ! -f "./${TName}.Mdata" ]
       then
-           touch ./$TName
-           touch "./${TName}.Mdata"
+                touch ./$TName
+                touch "./${TName}.Mdata"
 
-           
-          read -p "Enter number of Columns and You must Number at least 2 Columns: " NColumns 
-          testOnlyNumber "$NColumns" ---
+                
+                read -p "Enter number of Columns and You must Number at least 2 Columns: " NColumns 
+                testOnlyNumber "$NColumns" 
           
           if [ $? -eq 0 ]
           then
@@ -72,51 +72,76 @@ then
               then 
                       for i in $(eval echo "{1..$NColumns}")
                       do
-                        read -p "Enter Column name: " ColName
-                        echo "Please,choose Datatypes column ?"
-                        select DtypeCol in int string
-                        do 
-                            case $DtypeCol in 
-                            "int")
-                              break
-                                ;;
-                            "string")
-                              break
-                              ;;
-                          
-                            *)
-                            echo select valid datatype for column
-                            ;;
-                            esac 
-                        done   
-                        if [ $i -eq 1 ]
-                        then 
-                                    echo "Please,choose this column is Primary key or no"
-                                    select Pk in YES NO
-                                    do
-                                        case $Pk in
-                                        
-                                        "YES")
-                                        
+                         
+                          read -p "Enter Column name: " ColName
+                          #check unique Names Column
+                          testValidTableName "$ColName"
+                          if [ $? -eq 0 ]
+                          then
+                                  while (( `cut -d":" -f1 "./$TName.Mdata" | grep -x $ColName |wc -w` > 0 ))
+                                            do 
+                                                read -p "$ColName should be unique, please enter another Name to this Column: " ColName 
+                                                testValidTableName "$ColName"
+                                            done
+
+                                   echo "Please,choose Datatypes column ?"
+                                    select DtypeCol in int string
+                                    do 
+                                        case $DtypeCol in 
+                                        "int")
                                           break
                                             ;;
-                                        "NO")
+                                        "string")
                                           break
                                           ;;
+                                      
                                         *)
-                                              echo Choose valid Number for column
-                                          ;;
-                                        esac
+                                        echo select valid datatype for column
+                                        ;;
+                                        esac 
+                                    done  
+                                      if [ $i -eq 1 ]
+                              then 
+                                        echo "Please,choose this column is Primary key or no"
+                                        select Pk in YES NO
+                                        do
+                                            case $Pk in
+                                            
+                                            "YES")
+                                            
+                                              break
+                                                ;;
+                                            "NO")
+                                              break
+                                              ;;
+                                            *)
+                                                  echo Choose valid Number for column
+                                              ;;
+                                            esac
 
-                                        
-                                    done 
+                                            
+                                        done 
+                              else 
+                              Pk=NO
+                              fi 
+
+                              echo $ColName:$DtypeCol:$Pk >>"$TName.Mdata" 
+
                           else 
-                          Pk=NO
-                          fi
+                             echo "Sorry,Can't enter invalid Characters"
+                             
+                          fi 
+                          
+                                  
+                          
 
-                        echo $ColName:$DtypeCol:$Pk >>"$TName.Mdata" 
-                        
-                      done
+                           
+                          
+
+                            
+                            
+                          done
+                         
                     echo "Table is Created :)"
               else 
               echo "you must enter at least two columns"
