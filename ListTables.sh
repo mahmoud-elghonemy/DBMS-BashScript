@@ -10,7 +10,7 @@ tables=`ls -F | grep -v / | grep -v !*.Mdata`
         echo "-----------------"
         echo "List of Tables:"
         echo "-----------------"
-        echo "    $tables      "
+        echo "$tables"
         echo "-----------------"
     fi
 
