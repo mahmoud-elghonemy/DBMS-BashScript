@@ -16,7 +16,7 @@
 
 #menu Operation
 echo "Select what do you do on Database "
-select operation in "Create Table" "List Tables" "Drop Table" "Insert into Table" "Select From Table" "Delete From Table" "Update Table" "Exit"
+select operation in "Create Table" "List Tables" "Drop Table" "Insert into Table" "Select From Table" "Delete From Table" "Update Table" "Return to Back Menu"
 do
 
         case $operation in 
@@ -43,7 +43,8 @@ do
          "Update Table")
           ../../Update.sh
          ;;
-         "Exit")
+         "Return to Back Menu")
+          break
          ;;
          *)
          echo "Please , choose correct operation"
