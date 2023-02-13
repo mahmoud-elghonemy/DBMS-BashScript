@@ -54,7 +54,7 @@ then
         echo "Please , your old value in field "
         read OldValue
         #check OldValue value is exist or no 
-        #echo `cut -d":" -f$indexType "./$InTable" | grep -x $OldValue | wc -w`
+       
         while (( `cut -d":" -f2 "./$InTable" | grep -x $OldValue | wc -w` == 0 ))
         do 
             read -p "Sorry $OldValue Doesn't Exist, please enter Exist value to Update : " OldValue
