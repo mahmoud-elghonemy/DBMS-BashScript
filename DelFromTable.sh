@@ -22,7 +22,9 @@ do
     case $sel in 
        "Delete all data From Table")
         sed -i "d" ./$delFormTable
+        echo "----------------------"
         echo "Delete Sucessfully :) "
+        echo "----------------------"
 
        ;;
         "Delete Column")
@@ -56,8 +58,9 @@ do
                         mv ./$delFormTable.del ./$delFormTable
                         # delete line containing column from Mdata/$tableName
                         sed -i "$colNum"d ./$delFormTable.Mdata  
-
+                        echo "------------------------------"
                         echo "Delete Column Sucessfully :) "
+                         echo "------------------------------"
                         fi
                     else
                         echo "ERROR:In-valid column name.";
@@ -118,8 +121,9 @@ do
                         ((NumDelDone++))
                             
                     done
-
+                   echo "-----------------------------"
                    echo "Delete Row Sucessfully :) "
+                    echo "----------------------------"
         ;;
         "Return Back to Menu")
         break
