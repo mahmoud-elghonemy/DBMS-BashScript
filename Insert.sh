@@ -13,7 +13,6 @@
 
 
 
-
 #Function check datatypes
 function checkInt()
 {
@@ -31,38 +30,7 @@ function checkString()
     
 }
 
-function checkPK()
-{
-    local first_Column=($(awk 'BEGIN{FS=":";} {print $1}' ./"$2"))
-    for i in ${first_Column[@]}
-    do
-         if [ "$1" -eq $i  ]
-         then
-            return 1
-         fi
-        
-    done
-    return 0
-    
-}
-# function repeatInputPK()
-# {
-    
-#     if [ $i -eq 0 ] #check if is pk or no
-#     then
-#     checkPK "$inputInt" "$InTable"   
-#           if [ $? -ne 0 ]
-#           then 
-#              echo "Please,Enter input secific PK"
-#              read newPK
-#              repeatInputPK
-#           else 
-             
-#           fi                                
-#     fi 
-    
-    
-# }
+
 
 echo "Enter table name to insert row into this table: "
 read InTable
@@ -79,23 +47,39 @@ then
             if [ ${ColsDataTypes[i]} == "int" ]
             then 
                         while [ true ]
-                        do
-                            read inputInt
-                            checkInt "$inputInt"
-                            if [ $? -eq 0 ]
-                            then 
-                            output+=$inputInt
-                            if [ $i -ne $NumRows ]
-                             then
-                                 output+=:
-                            fi
-                            break
-                            else 
-                                echo "you must enter integer datatype in this "${ColsName[i]}
-                                echo "Please, Enter another once "${ColsName[i]}
-                    
-                            fi
-                            done
+                        do  
+                            
+                                    read inputInt
+                                    checkInt "$inputInt"
+                                    if [ $? -eq 0 ]
+                                    then 
+                                        
+                                        
+                                            #unique id
+                                            if (( $i == 0 )) ;then
+                                            while (( `cut -d":" -f1 "./$InTable" | grep -x $inputInt |wc -w` > 0 ))
+                                            do 
+                                                read -p "${ColsName[i]} should be unique, please enter another value: " inputInt
+                                            done
+                                            fi
+                                                    
+                                                    output+=$inputInt
+                                                    if [ $i -ne $NumRows ]
+                                                    then
+                                                        output+=:
+                                                    fi
+
+                                            break
+                                        
+
+                                    
+                                
+                                    else 
+                                            echo "you must enter integer datatype in this "${ColsName[i]}
+                                            echo "Please, Enter another once "${ColsName[i]}
+                            
+                                    fi
+                        done
             else 
                         while [ true ]
                         do
@@ -103,13 +87,13 @@ then
                                     checkString "$inputStr"
                                         if [ $? -eq 0 ]
                                         then 
-                                            #   if [ $i -eq 0 ] #check if is pk or no
-                                            #   then
-                                            #   checkPK "$inputInt" "$InTable"
-                                            #   fi 
-
-
-
+                                        #unique id
+                                            if (( $i == 0 )) ;then
+                                            while (( `cut -d":" -f1 "./$InTable" | grep -x $inputStr |wc -w` > 0 ))
+                                            do 
+                                                read -p "${ColsName[i]} should be unique, please enter another value: " inputStr
+                                            done
+                                            fi    
 
                                         output+=$inputStr
                                             if [ $i -ne $NumRows ]
