@@ -1,14 +1,14 @@
 #!/bin/bash
 #description : 
 # Steps of deleting column:
-#   1- Read column name from user
-#   2- Validate column name (column name exists in Mdata/$tableName)
-#   3- Get column number
-#   4- Delete column from Data/$tableName
-#   5- Delete row from Metadata/$tableName.metadata
+#   1- Read column name from user---->okay
+#   2- Validate column name (column name exists in Mdata/$tableName)--->okay
+#   3- Get column number -->okay
+#   4- Delete column from Data/$tableName--->okay
+#   5- Delete row from table--->okay
 
 # read column name from user
-cd ./DB/Cloud
+
 read -p "Please,Enter name table  to select it: " delFormTable
 
 if [ -f ./$delFormTable ]
@@ -45,6 +45,11 @@ do
                     if [[ $colFlag == 0 ]]; then
                     # valid colName
                         
+
+                        if [ $colNum -eq 1 ]
+                        then
+                            echo "Con't PK in Table :) "
+                        else
                         touch ./$delFormTable.del
                         cut -d':' --complement -f$colNum ./$delFormTable > ./$delFormTable.del
                         mv ./$delFormTable.del ./$delFormTable
@@ -52,6 +57,7 @@ do
                         sed -i "$colNum"d ./$delFormTable.Mdata  
 
                         echo "Delete Column Sucessfully :) "
+                        fi
                     else
                         echo "ERROR:In-valid column name.";
                     fi
