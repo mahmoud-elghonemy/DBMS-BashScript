@@ -9,9 +9,9 @@
 
 
 
-
 read -p "Please,Enter name table  to select it: " selTable
-
+if [ ! ${#selTable} -eq 0 ]
+then
 if [ -f ./$selTable ]
 then 
 echo "Please,choose what do you want to select from menu? "
@@ -52,4 +52,7 @@ do
 done
 else 
 echo "Doesn't Exist this table"
+fi
+else 
+echo "You must enter input,Can't input Empty"
 fi
