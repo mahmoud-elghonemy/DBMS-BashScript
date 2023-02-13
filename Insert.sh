@@ -9,7 +9,7 @@
 #ask user enter $f2 into $f1 Column---> okay
 #echo user enter int into id Column--> okay
 #validation value is verify datatype or no ---->okay
-#validation if first column is pk check is unique and not null---->
+#validation if first column is pk check is unique and not null---->okay
 
 
 
