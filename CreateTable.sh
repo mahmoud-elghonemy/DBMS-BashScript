@@ -73,73 +73,76 @@ then
                       for i in $(eval echo "{1..$NColumns}")
                       do
                          
-                          read -p "Enter Column name: " ColName
-                          #check unique Names Column
-                          testValidTableName "$ColName"
-                          if [ $? -eq 0 ]
-                          then
-                                  while (( `cut -d":" -f1 "./$TName.Mdata" | grep -x $ColName |wc -w` > 0 ))
-                                            do 
-                                                read -p "$ColName should be unique, please enter another Name to this Column: " ColName 
-                                                testValidTableName "$ColName"
-                                            done
+                         while [ true ]
+                         do
+                                read -p "Enter Column name: " ColName
+                                #check unique Names Column
+                                testValidTableName "$ColName"
+                                if [ $? -eq 0 ]
+                                then
+                                        while (( `cut -d":" -f1 "./$TName.Mdata" | grep -x $ColName |wc -w` > 0 ))
+                                                  do 
+                                                      read -p "$ColName should be unique, please enter another Name to this Column: " ColName 
+                                                      testValidTableName "$ColName"
+                                                  done
 
-                                   echo "Please,choose Datatypes column ?"
-                                    select DtypeCol in int string
-                                    do 
-                                        case $DtypeCol in 
-                                        "int")
-                                          break
-                                            ;;
-                                        "string")
-                                          break
-                                          ;;
-                                      
-                                        *)
-                                        echo select valid datatype for column
-                                        ;;
-                                        esac 
-                                    done  
-                                      if [ $i -eq 1 ]
-                              then 
-                                        echo "Please,choose this column is Primary key or no"
-                                        select Pk in YES NO
-                                        do
-                                            case $Pk in
-                                            
-                                            "YES")
-                                            
-                                              break
+                                        echo "Please,choose Datatypes column ?"
+                                          select DtypeCol in int string
+                                          do 
+                                              case $DtypeCol in 
+                                              "int")
+                                                break
+                                                  ;;
+                                              "string")
+                                                break
                                                 ;;
-                                            "NO")
-                                              break
-                                              ;;
-                                            *)
-                                                  echo Choose valid Number for column
-                                              ;;
-                                            esac
-
                                             
-                                        done 
-                              else 
-                              Pk=NO
-                              fi 
+                                              *)
+                                              echo select valid datatype for column
+                                              ;;
+                                              esac 
+                                          done  
+                                            if [ $i -eq 1 ]
+                                    then 
+                                              echo "Please,choose this column is Primary key or no"
+                                              select Pk in YES NO
+                                              do
+                                                  case $Pk in
+                                                  
+                                                  "YES")
+                                                  
+                                                    break
+                                                      ;;
+                                                  "NO")
+                                                    break
+                                                    ;;
+                                                  *)
+                                                        echo Choose valid Number for column
+                                                    ;;
+                                                  esac
 
-                              echo $ColName:$DtypeCol:$Pk >>"$TName.Mdata" 
+                                                  
+                                              done 
+                                    else 
+                                    Pk=NO
+                                    fi 
 
-                          else 
-                             echo "Sorry,Can't enter invalid Characters"
-                             
-                          fi 
+                                    echo $ColName:$DtypeCol:$Pk >>"$TName.Mdata" 
+                                    break
+
+                                else 
+                                  
+                                  echo "Sorry,Can't enter invalid Characters"
+
+                                  
+
+
+                                fi 
                           
                                   
-                          
 
-                           
-                          
 
-                            
-                            
+                            done
                           done
                          
                     echo "Table is Created :)"
