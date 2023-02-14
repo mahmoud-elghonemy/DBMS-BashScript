@@ -82,8 +82,17 @@ then
                                 then
                                         while (( `cut -d":" -f1 "./$TName.Mdata" | grep -x $ColName |wc -w` > 0 ))
                                                   do 
+                                                      while [ true ]
+                                                      do
                                                       read -p "$ColName should be unique, please enter another Name to this Column: " ColName 
                                                       testValidTableName "$ColName"
+                                                      if [ $? -eq 0 ]
+                                                      then
+                                                             break
+                                                      else 
+                                                          echo "please, Enter Vaild name table"
+                                                      fi
+                                                      done
                                                   done
 
                                         echo "Please,choose Datatypes column ?"
@@ -104,7 +113,7 @@ then
                                           done  
                                             if [ $i -eq 1 ]
                                            then 
-                                                PK=YES 
+                                            PK=YES 
                                            else 
                                            Pk=NO
                                            fi 
