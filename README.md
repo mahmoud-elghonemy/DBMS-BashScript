@@ -4,6 +4,11 @@
 > It is a simple database engine project to make simple operations with databases and tables. 
 
 <a name="desc"></a>
+## Digram 
+![Bash Project Digram offical](https://user-images.githubusercontent.com/47304558/218662079-40aad1f2-4964-4051-b765-09fc86b74d2e.png)
+
+## Way of Storing Data
+![Way of Save Database Engine](https://user-images.githubusercontent.com/47304558/218662095-f2927093-e9de-4a7e-acd6-06332c9302d2.png)
 ## DataBase Menu
 > - Create DataBase
 > - List Databases
