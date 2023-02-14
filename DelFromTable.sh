@@ -63,7 +63,7 @@ do
                          echo "------------------------------"
                         fi
                     else
-                        echo "ERROR:In-valid column name.";
+                        echo "In-valid column name.";
                     fi
                         
                
