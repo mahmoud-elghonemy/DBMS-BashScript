@@ -2,6 +2,7 @@
 #description : update specific value in specific Column 
 
 #Function check datatypes
+
 function checkInt()
 {
     local re='^([0-9]+)*$'
@@ -17,77 +18,142 @@ function checkString()
     [[ "$1" =~ $re1 ]]
     
 }
+testValidInt() {
+  if checkInt "$1"; then 
+    return 0
+  else
+     return 1 
+  fi
+}
+testValidString() {
+  if checkString "$1"; then 
+    return 0
+  else
+     return 1 
+  fi
+}
+
 
  
 echo "Enter table name to Update row into this table: "
-read InTable
-if [ ! ${#InTable} -eq 0 ]
+read updateTable
+if [ ! ${#updateTable} -eq 0 ]
 then
-if [ -f "./$InTable" -a -f "./$InTable.Mdata" ]
+if [ -f "./$updateTable" -a -f "./$updateTable.Mdata" ]
 then 
-         NumCol=($(awk 'BEGIN{FS=":";} {print NF}' ./$InTable.Mdata)) 
-         ColsName=($(awk 'BEGIN{FS=":";} {print $1}' ./$InTable.Mdata))
-         ColsDataTypes=($(awk 'BEGIN{FS=":";} {print $2}' ./$InTable.Mdata))
-         output="" 
+         NumCol=($(awk 'BEGIN{FS=":";} {print NF}' ./$updateTable.Mdata)) 
+         ColsName=($(awk 'BEGIN{FS=":";} {print $1}' ./$updateTable.Mdata))
+         
+       
 
          echo "Please, Enter you Name Column"
          read NameCal
+          testValidString "$NameCal" 
+          if [ $? -eq 0 -a ! ${#NameCal} -eq 0 ]
+          then
             #check exist column name is exist in table or no 
-            while (( `cut -d":" -f1 "./$InTable.Mdata" | grep -x $NameCal | wc -w` == 0 ))
-            do 
-                    read -p "$NameCal Column should be Exist in $InTable table, please enter Correct Column: " NameCal
+            while (( `cut -d":" -f1 "./$updateTable.Mdata" | grep -x $NameCal | wc -w` == 0 ))
+            do      
+                   while [ true ]
+                   do
+                    read -p "$NameCal Column should be Exist in $updateTable table, please enter Correct Column: " NameCal
+                    testValidString "$NameCal" 
+                    if [ $? -eq 0  -a  ! ${#NameCal} -eq 0  ]
+                    then
+                          break
+                    else 
+                       echo "you must enter String datatype in this "${ColsName[i]}
+                    fi
+                   done
             done
+           fi
         
-         indexType=0
-         #know datatype 
-         for i in $ColsName 
-         do
+            NumsCols=($(awk 'BEGIN{FS=":";} END{print NR}' ./$updateTable.Mdata)) 
+            numCol=`awk -v myvar=$NameCal 'BEGIN{FS=":";} {
+                        if($1==myvar)
+                        {print NR}
+                        }' ./$updateTable.Mdata`
+            
 
-              if [ $i == $NameCal ]
-              then
-                  break
-              fi
-              ((indexType++))
-         done
-        #  echo ${ColsDataTypes[indexType]}
+            DatatypeCol=`awk -v myvar=$NameCal 'BEGIN{FS=":";} {
+                        if($1==myvar)
+                        {print $2}
+                        }' ./$updateTable.Mdata`
 
+           echo $DatatypeCol
+                  
+       
+         
+      
         echo "Please , your old value in field "
         read OldValue
-        #check OldValue value is exist or no 
-       
-        while (( `cut -d":" -f2 "./$InTable" | grep -x $OldValue | wc -w` == 0 ))
-        do 
-            read -p "Sorry $OldValue Doesn't Exist, please enter Exist value to Update : " OldValue
+           
+        
+        if [ ! ${#OldValue} -eq 0 ]
+        then
+        while (( `cut -d":" -f$numCol "./$updateTable" | grep -x $OldValue | wc -w` == 0 ))
+        do   
+             while [ true ]
+             do
+                read -p "Sorry $OldValue Doesn't Exist, please enter Exist value to Update : " OldValue
+                if [ ! ${#OldValue} -eq 0  ]
+                    then
+                          break
+                    else 
+                       echo "Can't input value,you must enter Value datatype in this "${ColsName[i]}
+                    fi
+            
+        
+              done
+        
         done
-                                
+        fi
 
   
          echo "Please,Enter you new value"
-          if [ ${ColsDataTypes[indexType]} == "int" ]
+          if [ $DatatypeCol == "int" ]
           then
                 while [ true ]
                 do
                 read NewValue
-                checkInt $NewValue
-                         if [ $? -eq 0 ]
+                testValidInt $NewValue
+                         if [ $? -eq 0 -a ! ${#NewValue} -eq 0 ]
                          then
                               
                                    #if Column is PK
-                                   if (( $indexType == 0 )) ;then
-                                    while (( `cut -d":" -f1 "./$InTable" | grep -x $NewValue |wc -w` > 0 ))
-                                    do 
+                                   if (( $numCol == 1 )) ;then
+                                    while (( `cut -d":" -f1 "./$updateTable" | grep -x $NewValue |wc -w` > 0 ))
+                                    do   
+                                        while [ true ]
+                                        do
                                         read -p "${ColsName[i]} should be unique, please enter another value: " NewValue
+                                        testValidInt $NewValue 
+                                         if [ $? -eq 0 -a ! ${#NewValue} -eq 0 ]
+                                         then
+                                              break
+                                         fi
+                                         done
+
                                     done
                                     fi    
                                  
                                 #replace or update value
-                                sed  "s/:$OldValue:/:$NewValue:/g" ./$InTable > ./tempFile
-                                mv ./tempFile ./$InTable
-                               
+                                if [ $numCol -eq 1 ]
+                                then
+                                sed  "s/$OldValue:/$NewValue:/g" ./$updateTable > ./tempFile
+                                mv ./tempFile ./$updateTable
+                                elif [ $numCol  -eq $NumsCols ]
+                                then 
+                                    sed  "s/:$OldValue/:$NewValue/g" ./$updateTable > ./tempFile
+                                    mv ./tempFile ./$updateTable
+                                else
+                                sed  "s/:$OldValue:/:$NewValue:/g" ./$updateTable > ./tempFile
+                                mv ./tempFile ./$updateTable
+                                fi
                               
                               break
                          else  
-                             echo "Sorry,Please you must enter ${ColsDataTypes[indexType]} in this $NameCal column"
+                             echo "Sorry,Please you must enter $DatatypeCol in this $NameCal column"
                              echo "Please,Enter another once your value ?"
                          fi 
                 done
@@ -95,26 +161,43 @@ then
               while [ true ]
                 do
                 read NewValue
-                checkString $NewValue
-                       if [ $? -eq 0 ]
+                testValidString $NewValue
+                       if [ $? -eq 0 -a ! ${#NewValue} -eq 0 ]
                          then  
                                #if Column is PK
-                                   if (( $indexType == 0 )) ;then
-                                    while (( `cut -d":" -f1 "./$InTable" | grep -x $NewValue |wc -w` > 0 ))
+                                   if (( $numCol == 1 )) ;then
+                                    while (( `cut -d":" -f1 "./$updateTable" | grep -x $NewValue |wc -w` > 0 ))
                                     do 
+                                       while [ true ]
+                                        do
                                         read -p "${ColsName[i]} should be unique, please enter another value: " NewValue
+                                        testValidString $NewValue 
+                                         if [ $? -eq 0 -a ! ${#NewValue} -eq 0 ]
+                                         then
+                                              break
+                                         fi
+                                         done
                                     done
                                     fi    
                                
                             
-                              
-                                #replace or update value
-                                sed  "s/:$OldValue:/:$NewValue:/g" ./$InTable > ./tempFile
-                                mv ./tempFile ./$InTable
+                                  #replace or update value
+                                if [ $numCol -eq 1 ]
+                                then
+                                sed  "s/$OldValue:/$NewValue:/g" ./$updateTable > ./tempFile
+                                mv ./tempFile ./$updateTable
+                                elif [ $numCol  -eq $NumsCols ]
+                                then 
+                                    sed  "s/:$OldValue/:$NewValue/g" ./$updateTable > ./tempFile
+                                    mv ./tempFile ./$updateTable
+                                else
+                                sed  "s/:$OldValue:/:$NewValue:/g" ./$updateTable > ./tempFile
+                                mv ./tempFile ./$updateTable
+                                fi
 
                                break
                          else  
-                             echo "Sorry,Please you must enter ${ColsDataTypes[indexType]} in this $NameCal column"
+                             echo "Sorry,Please you must enter $DatatypeCol in this $NameCal column"
                              echo "Please,Enter another once your value ?"
                          fi 
 
